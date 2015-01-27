@@ -23,12 +23,12 @@ public class NegEndereco
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param e Armazena o objeto passado por parametro
+    * @param pe Armazena o objeto passado por parametro
     */
-    public void cadastrarEndereco(PerEndereco e) throws SQLException
+    public void cadastrarEndereco(PerEndereco pe) throws SQLException
     {
-        PerEndereco eb = new  PerEndereco();
-        eb.cadastrarEndereco(e);
+        PerEndereco peAux = new  PerEndereco();
+        peAux.cadastrarEndereco(pe);
     }//public void cadastrarEndereco(PerEndereco e) throws SQLException
 
     /**
@@ -39,12 +39,12 @@ public class NegEndereco
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param e Armazena o objeto passado por parametro
+    * @param pe Armazena o objeto passado por parametro
     */
-    public void deletarEnderecoNumero(PerEndereco e) throws SQLException
+    public void deletarEnderecoNumero(PerEndereco pe) throws SQLException
     {
-        PerEndereco eb = new PerEndereco();
-        eb.deletarEnderecoNumero(e);
+        PerEndereco peAux = new PerEndereco();
+        peAux.deletarEnderecoNumero(pe);
     }//public void deletarEnderecoNumero(PerEndereco e) throws SQLException
 
     /**
@@ -55,12 +55,12 @@ public class NegEndereco
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param e Armazena o objeto passado por parametro
+    * @param pe Armazena o objeto passado por parametro
     */
-    public void deletarEnderecoCodigo(PerEndereco e) throws SQLException
+    public void deletarEnderecoCodigo(PerEndereco pe) throws SQLException
     {
-        PerEndereco eb = new PerEndereco();
-        eb.deletarEnderecoCodigo(e);
+        PerEndereco peAux = new PerEndereco();
+        peAux.deletarEnderecoCodigo(pe);
     }//public void deletarEnderecoCodigo(PerEndereco e) throws SQLException
 
     /**
@@ -75,8 +75,8 @@ public class NegEndereco
     */
     public ArrayList<PerEndereco> buscarTodosEnderecos() throws SQLException
     {
-        PerEndereco eb = new PerEndereco();
-        return eb.buscarTodosEnderecos();
+        PerEndereco peAux = new PerEndereco();
+        return peAux.buscarTodosEnderecos();
     }//public ArrayList<PerEndereco> buscarTodosEnderecos() throws SQLException
 
     /**
@@ -87,13 +87,13 @@ public class NegEndereco
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param e Armazena o objeto passado por parametro
+    * @param pe Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se o endereçõ existe ou não
     */
-    public boolean buscarEnderecoNumero(PerEndereco e) throws SQLException
+    public boolean buscarEnderecoNumero(PerEndereco pe) throws SQLException
     {
-        PerEndereco eb = new PerEndereco();
-        return eb.buscarEnderecoNumero(e);
+        PerEndereco peAux = new PerEndereco();
+        return peAux.buscarEnderecoNumero(pe);
     }//public boolean buscarEnderecoNumero(PerEndereco e) throws SQLException
 
     /**
@@ -104,12 +104,12 @@ public class NegEndereco
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param e Armazena o objeto passado por parametro
+    * @param pe Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se o endereçõ existe ou não
     */
-    public boolean buscarEnderecoCodigo(PerEndereco e) throws SQLException
+    public boolean buscarEnderecoCodigo(PerEndereco pe) throws SQLException
     {
-        PerEndereco eb = new PerEndereco();
-        return eb.buscarEnderecoCodigo(e);
+        PerEndereco peAux = new PerEndereco();
+        return peAux.buscarEnderecoCodigo(pe);
     }//public boolean buscarEnderecoCodigo(PerEndereco e) throws SQLException
 }//public class NegEndereco 

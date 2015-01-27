@@ -32,12 +32,12 @@ public class NegAutomovel
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param a Armazena o objeto passado por parametro
+    * @param pa Armazena o objeto passado por parametro
     */
-    public void cadastrarAutomovel(PerAutomovel a) throws SQLException
+    public void cadastrarAutomovel(PerAutomovel pa) throws SQLException
     {
-        PerAutomovel ab = new PerAutomovel();
-        ab.cadastrarAutomovel(a);
+        PerAutomovel auxPa = new PerAutomovel();
+        auxPa.cadastrarAutomovel(pa);
     }//public void cadastrarAutomovel(PerAutomovel a) throws SQLException
 
     /**

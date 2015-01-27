@@ -32,17 +32,17 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se tudo ocorreu bem ou não
     */
-    private boolean validaExclusaoCondutor(PerCondutor c) throws SQLException
+    private boolean validaExclusaoCondutor(PerCondutor pc) throws SQLException
     {
         this.retorno = true;
         
-        PerCondutor ab = new PerCondutor();
+        PerCondutor pcAux = new PerCondutor();
         Erro        er = new Erro();
         
-        if (ab.buscaRestricaoPkCondutor(c) == true) {
+        if (pcAux.buscaRestricaoPkCondutor(pc) == true) {
             er.SetErro("Tem um endereco vinculado ao condutor que você esta tentando excluir!");
             this.retorno = false;
         }//if (ab.buscaRestricaoPkCondutor(c) == true) {
@@ -59,12 +59,12 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     */
-    public void cadastrarCondutor(PerCondutor c) throws SQLException
+    public void cadastrarCondutor(PerCondutor pc) throws SQLException
     {
-        PerCondutor cb = new PerCondutor();
-        cb.cadastrarCondutor(c);
+        PerCondutor pcAux = new PerCondutor();
+        pcAux.cadastrarCondutor(pc);
     }//public void cadastrarCondutor(PerCondutor c) throws SQLException
     
     /**
@@ -75,14 +75,14 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se tudo ocorreu bem ou não
     */
-    public boolean deletarCondutorCnh(PerCondutor c) throws SQLException
+    public boolean deletarCondutorCnh(PerCondutor pc) throws SQLException
     {
-        if (this.validaExclusaoCondutor(c) == true) {
-            PerCondutor cb = new PerCondutor();
-            cb.deletarCondutorCnh(c);
+        if (this.validaExclusaoCondutor(pc) == true) {
+            PerCondutor pcAux = new PerCondutor();
+            pcAux.deletarCondutorCnh(pc);
         }//if (this.validaExclusaoCondutor(c) == true) {
         
         return this.retorno;
@@ -96,14 +96,14 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se tudo ocorreu bem ou não
     */
-    public boolean deletarCondutorCodigo(PerCondutor c) throws SQLException
+    public boolean deletarCondutorCodigo(PerCondutor pc) throws SQLException
     {
-        if (this.validaExclusaoCondutor(c) == true) {
-            PerCondutor cb = new PerCondutor();
-            cb.deletarCondutorCodigo(c);
+        if (this.validaExclusaoCondutor(pc) == true) {
+            PerCondutor pcAux = new PerCondutor();
+            pcAux.deletarCondutorCodigo(pc);
         }//if (this.validaExclusaoCondutor(c) == true) {
         
         return this.retorno;
@@ -121,9 +121,9 @@ public class NegCondutor
     */
     public ArrayList<PerCondutor> buscarTodosCondutores() throws SQLException
     {
-        PerCondutor cb = new PerCondutor();
-        return cb.buscarTodosCondutores();
-    }
+        PerCondutor pc = new PerCondutor();
+        return pc.buscarTodosCondutores();
+    }//public ArrayList<PerCondutor> buscarTodosCondutores() throws SQLException
 
     /**
     *
@@ -133,13 +133,13 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se achou ou não o registro
     */
-    public boolean buscarCondutorCnh(PerCondutor c) throws SQLException
+    public boolean buscarCondutorCnh(PerCondutor pc) throws SQLException
     {
-        PerCondutor cb = new PerCondutor();
-        return cb.buscarCondutorCnh(c);
+        PerCondutor pcAux = new PerCondutor();
+        return pcAux.buscarCondutorCnh(pc);
     }//public boolean buscarCondutorCnh(PerCondutor c) throws SQLException
   
     /**
@@ -150,12 +150,12 @@ public class NegCondutor
     * @author Matheus Souza da Silva
     * @since 02/05/2011
     * @exception SQLException lança um excessão caso algum erro de sql venha ocorrer
-    * @param c Armazena o objeto passado por parametro
+    * @param pc Armazena o objeto passado por parametro
     * @return Boolean Retorna uma flag indicando se achou ou não o registro
     */
-    public boolean buscarCondutorCodigo(PerCondutor c) throws SQLException
+    public boolean buscarCondutorCodigo(PerCondutor pc) throws SQLException
     {
-        PerCondutor cb = new PerCondutor();
-        return cb.buscarCondutorCodigo(c);
+        PerCondutor pcAux = new PerCondutor();
+        return pcAux.buscarCondutorCodigo(pc);
     }//public boolean buscarCondutorCodigo(PerCondutor c) throws SQLException
 }//public class NegCondutor 

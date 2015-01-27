@@ -56,7 +56,7 @@ public class VisAutomovel extends javax.swing.JInternalFrame
         jtModelo = new javax.swing.JTextField();
         jtAno = new javax.swing.JTextField();
         jtPlaca = new javax.swing.JTextField();
-        jcbMulta = new javax.swing.JComboBox<String>();
+        jcbMulta = new javax.swing.JComboBox<PerMulta>();
         jbCadastrar = new javax.swing.JButton();
         jbVisualizar = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
@@ -202,23 +202,22 @@ public class VisAutomovel extends javax.swing.JInternalFrame
             DefaultTableModel dtm = (DefaultTableModel) jTableAutomovel.getModel();
             String[] linha = new String[6];
 
-            NegAutomovel tc = new  NegAutomovel();
-            ArrayList<PerAutomovel> tb = new ArrayList<PerAutomovel>();
-            tb = tc.buscarTodosAutomoveis();
+            NegAutomovel na = new  NegAutomovel();
+            ArrayList<PerAutomovel> pa = new ArrayList<>(na.buscarTodosAutomoveis());
 
             //Zerar número de linhas da tabela
             dtm.setNumRows(0);
 
             //Preenchimento da JTable
-            for (int i=0; i<tb.size(); i++) {
-                linha[0] = Integer.toString(tb.get(i).getIdautomovel());
-                linha[1] = tb.get(i).getMarca();
-                linha[2] = tb.get(i).getModelo();
-                linha[3] = Integer.toString(tb.get(i).getAno());
-                linha[4] = tb.get(i).getPlaca();
-                linha[5] = tb.get(i).getMulta().getInfracao();
+            for (PerAutomovel paValor : pa) {
+                linha[0] = Integer.toString(paValor.getIdautomovel());
+                linha[1] = paValor.getMarca();
+                linha[2] = paValor.getModelo();
+                linha[3] = Integer.toString(paValor.getAno());
+                linha[4] = paValor.getPlaca();
+                linha[5] = paValor.getMulta().getInfracao();
                 dtm.addRow(linha);
-            }//for (int i=0; i<tb.size(); i++) {
+            } //for (int i=0; i<tb.size(); i++) {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
@@ -256,12 +255,11 @@ public class VisAutomovel extends javax.swing.JInternalFrame
     {
         try 
         {
-                    
-            NegMulta mc    = new NegMulta();
-            ArrayList<PerMulta> aAux = new ArrayList<>(mc.buscarTodasMultas());
+            NegMulta nm    = new NegMulta();
+            ArrayList<PerMulta> aPm = new ArrayList<>(nm.buscarTodasMultas());
             
-            for (PerMulta aAux1 : aAux) {
-                jcbMulta.addItem(aAux1.toString());
+            for (PerMulta aPmValor : aPm) {
+                jcbMulta.addItem(aPmValor);
             } //for (int i=0; i<aAux.size(); i++) {
 
         } catch (Exception e) {
@@ -286,19 +284,21 @@ public class VisAutomovel extends javax.swing.JInternalFrame
         try 
         {
             //se qualquer um dos campos  não estiver vazio ele executa isto
-            if (!jtMarca.getText().isEmpty() && !jtModelo.getText().isEmpty() 
-            && !jtAno.getText().isEmpty() && !jtPlaca.getText().isEmpty()) {
-                PerAutomovel m = new PerAutomovel();
-                m.setMarca(jtMarca.getText());
-                m.setModelo(jtModelo.getText());
-                m.setAno(Integer.parseInt(jtAno.getText()));
-                m.setPlaca(jtPlaca.getText());
+            if (!jtMarca.getText().isEmpty() 
+            && !jtModelo.getText().isEmpty() 
+            && !jtAno.getText().isEmpty() 
+            && !jtPlaca.getText().isEmpty()) {
+                PerAutomovel pa = new PerAutomovel();
+                pa.setMarca(jtMarca.getText());
+                pa.setModelo(jtModelo.getText());
+                pa.setAno(Integer.parseInt(jtAno.getText()));
+                pa.setPlaca(jtPlaca.getText());
 
                 //COERÇÃO!
                 //CAST - Troca de tipo de dados forçada !!
-                m.setMulta((PerMulta) jcbMulta.getSelectedItem());
-                NegAutomovel ac = new NegAutomovel();
-                ac.cadastrarAutomovel(m);
+                pa.setMulta((PerMulta) jcbMulta.getSelectedItem());
+                NegAutomovel na = new NegAutomovel();
+                na.cadastrarAutomovel(pa);
 
                 JOptionPane.showMessageDialog(null, "Automovel Cadastrado com Sucesso! ");
               
@@ -337,27 +337,25 @@ public class VisAutomovel extends javax.swing.JInternalFrame
     private void jbVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVisualizarActionPerformed
         try 
         {
-            NegAutomovel mc = new NegAutomovel();
-            PerAutomovel m = new PerAutomovel();
-            ArrayList<PerAutomovel> mAux = new ArrayList<PerAutomovel>();
-            mAux = mc.buscarTodosAutomoveis();
+            NegAutomovel na = new NegAutomovel();
+            ArrayList<PerAutomovel> pa = new ArrayList<>(na.buscarTodosAutomoveis());
 
-            DefaultTableModel dtm=(DefaultTableModel)jTableAutomovel.getModel();
+            DefaultTableModel dtm = (DefaultTableModel)jTableAutomovel.getModel();
 
             //  zera o número de linhas da Tabela
             dtm.setNumRows(0);
 
             String[] linha = new String[6];
 
-            for (int i=0; i<mAux.size(); i++) {
-                linha[0] = Integer.toString(mAux.get(i).getIdautomovel());
-                linha[1] = mAux.get(i).getMarca();
-                linha[2] = mAux.get(i).getModelo();
-                linha[3] = Integer.toString(mAux.get(i).getAno());
-                linha[4] = mAux.get(i).getPlaca();
-                linha[5] = mAux.get(i).getMulta().getInfracao();
+            for (PerAutomovel paValor : pa) {
+                linha[0] = Integer.toString(paValor.getIdautomovel());
+                linha[1] = paValor.getMarca();
+                linha[2] = paValor.getModelo();
+                linha[3] = Integer.toString(paValor.getAno());
+                linha[4] = paValor.getPlaca();
+                linha[5] = paValor.getMulta().getInfracao();
                 dtm.addRow(linha);
-            }//for (int i=0; i<mAux.size(); i++) {
+            } //for (int i=0; i<mAux.size(); i++) {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,"Erro! "+e.getMessage());
         }//try
@@ -384,7 +382,7 @@ public class VisAutomovel extends javax.swing.JInternalFrame
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbVisualizar;
-    private javax.swing.JComboBox<String> jcbMulta;
+    private javax.swing.JComboBox<PerMulta> jcbMulta;
     private javax.swing.JLabel jlAno;
     private javax.swing.JLabel jlMarca;
     private javax.swing.JLabel jlModelo;

@@ -57,7 +57,7 @@ public class VisCondutor extends javax.swing.JInternalFrame {
         jtRg = new javax.swing.JTextField();
         jtCpf = new javax.swing.JTextField();
         jtCnh = new javax.swing.JTextField();
-        jcbMarca = new javax.swing.JComboBox<String>();
+        jcbMarca = new javax.swing.JComboBox<PerAutomovel>();
         jbCadastrar = new javax.swing.JButton();
         jbVisualizar = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
@@ -312,26 +312,25 @@ public class VisCondutor extends javax.swing.JInternalFrame {
             DefaultTableModel dtm = (DefaultTableModel) jTableCondutor.getModel();
             String[] linha = new String[9];
 
-            NegCondutor tc = new   NegCondutor();
-            ArrayList< PerCondutor> tb = new ArrayList< PerCondutor>();
-            tb = tc.buscarTodosCondutores();
+            NegCondutor nc = new   NegCondutor();
+            ArrayList<PerCondutor> pc = new ArrayList<>(nc.buscarTodosCondutores());
 
             //Zerar número de linhas da tabela
             dtm.setNumRows(0);
 
             //Preenchimento da JTable
-            for (int i=0 ; i<tb.size() ; i++) {
-                linha[0] = Integer.toString(tb.get(i).getIdcondutor());
-                linha[1] = tb.get(i).getSexo();
-                linha[2] = tb.get(i).getNome();
-                linha[3] = tb.get(i).getSobrenome();
-                linha[4] = Integer.toString(tb.get(i).getRg());
-                linha[5] = Integer.toString(tb.get(i).getCfp());
-                linha[6] = (tb.get(i).getDatanascimento());
-                linha[7] = Integer.toString(tb.get(i).getCnh());
-                linha[8] = tb.get(i).getAutomovel().getPlaca();
+            for (PerCondutor pcValor : pc) {
+                linha[0] = Integer.toString(pcValor.getIdcondutor());
+                linha[1] = pcValor.getSexo();
+                linha[2] = pcValor.getNome();
+                linha[3] = pcValor.getSobrenome();
+                linha[4] = Integer.toString(pcValor.getRg());
+                linha[5] = Integer.toString(pcValor.getCfp());
+                linha[6] = (pcValor.getDatanascimento());
+                linha[7] = Integer.toString(pcValor.getCnh());
+                linha[8] = pcValor.getAutomovel().getPlaca();
                 dtm.addRow(linha);
-            }//for (int i=0 ; i<tb.size() ; i++) {
+            } //for (int i=0 ; i<tb.size() ; i++) {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
@@ -370,11 +369,11 @@ public class VisCondutor extends javax.swing.JInternalFrame {
     {
         try 
         {
-            NegAutomovel mc = new NegAutomovel();
-            ArrayList<PerAutomovel> aAux = new ArrayList<>(mc.buscarTodosAutomoveis());
+            NegAutomovel na = new NegAutomovel();
+            ArrayList<PerAutomovel> paAux = new ArrayList<>(na.buscarTodosAutomoveis());
             
-            for (PerAutomovel aAux1 : aAux) {
-                jcbMarca.addItem(aAux1.toString());
+            for (PerAutomovel paAuxValor : paAux) {
+                jcbMarca.addItem(paAuxValor);
             } //for (int i=0; i<aAux.size(); i++) {
 
         } catch (Exception e) {
@@ -400,33 +399,34 @@ public class VisCondutor extends javax.swing.JInternalFrame {
         try 
         {
             //se qualquer um dos campos  não estiver vazio ele executa isto
-            if (!jtNome.getText().isEmpty() && !jtSobrenome.getText().isEmpty() 
-            && !jtRg.getText().isEmpty() && !jtCpf.getText().isEmpty() 
+            if (!jtNome.getText().isEmpty() 
+            && !jtSobrenome.getText().isEmpty() 
+            && !jtRg.getText().isEmpty() 
+            && !jtCpf.getText().isEmpty() 
             && !jtCnh.getText().isEmpty()) {
+                PerCondutor pc = new PerCondutor();
                 
-            PerCondutor c = new PerCondutor();
-            c.setSexo(bgSexo.getSelection().getActionCommand());
-            c.setNome(jtNome.getText());
-            c.setSobrenome(jtSobrenome.getText());
-            c.setRg(Integer.parseInt(jtRg.getText()));
-            c.setCfp(Integer.parseInt(jtCpf.getText()));
+                pc.setSexo(bgSexo.getSelection().getActionCommand());
+                pc.setNome(jtNome.getText());
+                pc.setSobrenome(jtSobrenome.getText());
+                pc.setRg(Integer.parseInt(jtRg.getText()));
+                pc.setCfp(Integer.parseInt(jtCpf.getText()));
 
-            String dia = (String) jcbDia.getSelectedItem();
-            String mes = (String) jcbMes.getSelectedItem();
-            String ano = (String) jcbAno.getSelectedItem();
-            String data= dia+"/"+mes+"/"+ano;  
-            c.setDatanascimento(data);
-            c.setCnh(Integer.parseInt(jtCnh.getText()));
+                String dia = (String) jcbDia.getSelectedItem();
+                String mes = (String) jcbMes.getSelectedItem();
+                String ano = (String) jcbAno.getSelectedItem();
+                String data= dia+"/"+mes+"/"+ano;  
+                
+                pc.setDatanascimento(data);
+                pc.setCnh(Integer.parseInt(jtCnh.getText()));
+                pc.setAutomovel((PerAutomovel) jcbMarca.getSelectedItem());//cast 
+                
+                NegCondutor nc = new NegCondutor();
+                nc.cadastrarCondutor(pc);
 
-            //COERÇÃO!
-            //CAST - Troca de tipo de dados forçada !!
-            c.setAutomovel((PerAutomovel) jcbMarca.getSelectedItem());
-            NegCondutor cc = new NegCondutor();
-            cc.cadastrarCondutor(c);
-
-            JOptionPane.showMessageDialog(null, "Condutor Cadastrado com Sucesso!");
-            Limpar(); //limpa todos os JtextField
-            AtualizarTabela(); //atualiza o Jtable
+                JOptionPane.showMessageDialog(null, "Condutor Cadastrado com Sucesso!");
+                Limpar(); //limpa todos os JtextField
+                AtualizarTabela(); //atualiza o Jtable
             
             } else { //do contrário ele mostra uma mensagem de erro
                 JOptionPane.showMessageDialog(
@@ -462,10 +462,8 @@ public class VisCondutor extends javax.swing.JInternalFrame {
     private void jbVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVisualizarActionPerformed
         try 
         {
-            NegCondutor mc = new NegCondutor();
-            PerCondutor c = new PerCondutor();
-            ArrayList<PerCondutor> cAux = new ArrayList<PerCondutor>();
-            cAux = mc.buscarTodosCondutores();
+            NegCondutor nc = new NegCondutor();
+            ArrayList<PerCondutor> pcAux = new ArrayList<>(nc.buscarTodosCondutores());
 
             DefaultTableModel dtm=(DefaultTableModel)jTableCondutor.getModel();
 
@@ -474,17 +472,16 @@ public class VisCondutor extends javax.swing.JInternalFrame {
 
             String[] linha = new String[9];
 
-            for (int i=0; i<cAux.size(); i++) {
-                linha[0] = Integer.toString(cAux.get(i).getIdcondutor());
-                linha[1] = cAux.get(i).getSexo();
-                linha[2] = cAux.get(i).getNome();
-                linha[3] = cAux.get(i).getSobrenome();
-                linha[4] = Integer.toString(cAux.get(i).getRg());
-                linha[5] = Integer.toString(cAux.get(i).getCfp());
-                linha[6] = (cAux.get(i).getDatanascimento());
-                linha[7] = Integer.toString(cAux.get(i).getCnh());
-                linha[8] = cAux.get(i).getAutomovel().getPlaca();
-
+            for (PerCondutor pcValor : pcAux) {
+                linha[0] = Integer.toString(pcValor.getIdcondutor());
+                linha[1] = pcValor.getSexo();
+                linha[2] = pcValor.getNome();
+                linha[3] = pcValor.getSobrenome();
+                linha[4] = Integer.toString(pcValor.getRg());
+                linha[5] = Integer.toString(pcValor.getCfp());
+                linha[6] = (pcValor.getDatanascimento());
+                linha[7] = Integer.toString(pcValor.getCnh());
+                linha[8] = pcValor.getAutomovel().getPlaca();
                 dtm.addRow(linha);
             }
         } catch (Exception e) {
@@ -522,7 +519,7 @@ public class VisCondutor extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbVisualizar;
     private javax.swing.JComboBox jcbAno;
     private javax.swing.JComboBox jcbDia;
-    private javax.swing.JComboBox<String> jcbMarca;
+    private javax.swing.JComboBox<PerAutomovel> jcbMarca;
     private javax.swing.JComboBox jcbMes;
     private javax.swing.JLabel jlCnh;
     private javax.swing.JLabel jlCpf;

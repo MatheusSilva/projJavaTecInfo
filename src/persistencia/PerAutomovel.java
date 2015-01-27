@@ -266,10 +266,10 @@ public class PerAutomovel
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param a Armazena o objeto do automovel
+    * @param pa Armazena o objeto do automovel
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public void cadastrarAutomovel(PerAutomovel a) throws SQLException
+    public void cadastrarAutomovel(PerAutomovel pa) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -284,11 +284,11 @@ public class PerAutomovel
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
         pstmt.setString(1, null);
-        pstmt.setString(2, a.getMarca());
-        pstmt.setString(3, a.getModelo());
-        pstmt.setInt(4, a.getAno());
-        pstmt.setString(5, a.getPlaca());
-        pstmt.setInt(6, a.getMulta().getIdmulta());
+        pstmt.setString(2, pa.getMarca());
+        pstmt.setString(3, pa.getModelo());
+        pstmt.setInt(4, pa.getAno());
+        pstmt.setString(5, pa.getPlaca());
+        pstmt.setInt(6, pa.getMulta().getIdmulta());
         
         pstmt.executeUpdate();
         pstmt.close();

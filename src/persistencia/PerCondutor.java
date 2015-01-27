@@ -360,10 +360,10 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param c Armazena o objeto do condutor
+    * @param pc Armazena o objeto do condutor
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public void cadastrarCondutor(PerCondutor c) throws SQLException
+    public void cadastrarCondutor(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -381,14 +381,14 @@ public class PerCondutor
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
         pstmt.setString(1, null);
-        pstmt.setString(2, c.getSexo());
-        pstmt.setString(3, c.getNome());
-        pstmt.setString(4, c.getSobrenome());
-        pstmt.setInt(5, c.getRg());
-        pstmt.setInt(6, c.getCfp());
-        pstmt.setString(7, c.getDatanascimento());
-        pstmt.setInt(8, c.getCnh());
-        pstmt.setInt(9, c.getAutomovel().getIdautomovel());
+        pstmt.setString(2, pc.getSexo());
+        pstmt.setString(3, pc.getNome());
+        pstmt.setString(4, pc.getSobrenome());
+        pstmt.setInt(5, pc.getRg());
+        pstmt.setInt(6, pc.getCfp());
+        pstmt.setString(7, pc.getDatanascimento());
+        pstmt.setInt(8, pc.getCnh());
+        pstmt.setInt(9, pc.getAutomovel().getIdautomovel());
         
         pstmt.executeUpdate();
         pstmt.close();
@@ -401,10 +401,10 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param c Armazena o objeto do condutor
+    * @param pc Armazena o objeto do condutor
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public void deletarCondutorCnh(PerCondutor c) throws SQLException
+    public void deletarCondutorCnh(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -413,7 +413,7 @@ public class PerCondutor
         
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
-        pstmt.setInt(1, c.getCnh());
+        pstmt.setInt(1, pc.getCnh());
 
         pstmt.executeUpdate();
         pstmt.close();
@@ -426,10 +426,10 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param c Armazena o objeto do condutor
+    * @param pc Armazena o objeto do condutor
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public void deletarCondutorCodigo(PerCondutor c) throws SQLException
+    public void deletarCondutorCodigo(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -438,7 +438,7 @@ public class PerCondutor
         
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
-        pstmt.setInt(1, c.getIdcondutor());
+        pstmt.setInt(1, pc.getIdcondutor());
 
         pstmt.executeUpdate();
         pstmt.close();
@@ -473,28 +473,28 @@ public class PerCondutor
                     +"\n WHERE automovel.idautomovel = condutor.idautomovel";
 
         ResultSet resultado = stat.executeQuery(sql);
-        ArrayList<PerCondutor> aAux = new ArrayList<>();
+        ArrayList<PerCondutor> pcAux = new ArrayList<>();
 
         while (resultado.next()) {
-            PerCondutor c = new PerCondutor();
-            c.setIdcondutor(resultado.getInt("idcondutor"));
-            c.setSexo(resultado.getString("sexo"));
-            c.setNome(resultado.getString("nome"));
-            c.setSobrenome(resultado.getString("sobrenome"));
-            c.setRg(resultado.getInt("rg"));
-            c.setCfp(resultado.getInt("cpf"));
-            c.setDatanascimento(resultado.getString("datanascimento"));
-            c.setCnh(resultado.getInt("cnh"));
+            PerCondutor pc = new PerCondutor();
+            pc.setIdcondutor(resultado.getInt("idcondutor"));
+            pc.setSexo(resultado.getString("sexo"));
+            pc.setNome(resultado.getString("nome"));
+            pc.setSobrenome(resultado.getString("sobrenome"));
+            pc.setRg(resultado.getInt("rg"));
+            pc.setCfp(resultado.getInt("cpf"));
+            pc.setDatanascimento(resultado.getString("datanascimento"));
+            pc.setCnh(resultado.getInt("cnh"));
 
-            PerAutomovel a = new PerAutomovel();
-            a.setPlaca(resultado.getString("placa"));
+            PerAutomovel pa = new PerAutomovel();
+            pa.setPlaca(resultado.getString("placa"));
             
-            c.setAutomovel(a);
-            aAux.add(c);
+            pc.setAutomovel(pa);
+            pcAux.add(pc);
         }//while (resultado.next()) {
 
         stat.close();
-        return aAux;
+        return pcAux;
     }//public ArrayList<PerCondutor> buscarTodosCondutores() throws SQLException
 
     /**
@@ -504,11 +504,11 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param a Armazena o objeto
+    * @param pc Armazena o objeto
     * @return Boolean Retorna uma flag indicando se achou ou não
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public boolean buscarCondutorCnh(PerCondutor a) throws SQLException
+    public boolean buscarCondutorCnh(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -517,12 +517,12 @@ public class PerCondutor
         
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
-        pstmt.setInt(1, a.getCnh());
+        pstmt.setInt(1, pc.getCnh());
         
         ResultSet resultado = pstmt.executeQuery();
 
         if (resultado.next()) {
-            a.setIdcondutor(resultado.getInt("idcondutor"));
+            pc.setIdcondutor(resultado.getInt("idcondutor"));
             pstmt.close();
             return true;
         } else {
@@ -538,11 +538,11 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param a Armazena o objeto
+    * @param pc Armazena o objeto
     * @return Boolean Retorna uma flag indicando se achou ou não
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public boolean buscarCondutorCodigo(PerCondutor a) throws SQLException
+    public boolean buscarCondutorCodigo(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -552,7 +552,7 @@ public class PerCondutor
         
         PreparedStatement pstmt = conexao.prepareStatement(updt);
         
-        pstmt.setInt(1, a.getIdcondutor());
+        pstmt.setInt(1, pc.getIdcondutor());
 
         ResultSet resultado = pstmt.executeQuery();
 
@@ -572,11 +572,11 @@ public class PerCondutor
     * @version 2.3 beta
     * @author Matheus Souza da Silva
     * @since 02/05/2011
-    * @param a Armazena o objeto
+    * @param pc Armazena o objeto
     * @return Boolean Retorna uma flag indicando se achou ou não
     * @throws SQLException Lança uma excessão caso algum erro no banco de dados venha ocorrer
     */
-    public boolean buscaRestricaoPkCondutor(PerCondutor a) throws SQLException
+    public boolean buscaRestricaoPkCondutor(PerCondutor pc) throws SQLException
     {
         Connection conexao = ConexaoBanco.getConexao();
         
@@ -586,7 +586,7 @@ public class PerCondutor
         
         PreparedStatement pstmt = conexao.prepareStatement(updt);
 
-        pstmt.setInt(1, a.getIdcondutor());
+        pstmt.setInt(1, pc.getIdcondutor());
 
         ResultSet resultado = pstmt.executeQuery();
 

@@ -10,7 +10,6 @@ import negocio.NegEndereco;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import persistencia.PerAutomovel;
 import persistencia.PerEndereco;
 import persistencia.PerCondutor;
 
@@ -57,7 +56,7 @@ public class VisEndereco extends javax.swing.JInternalFrame
         jtNumero = new javax.swing.JTextField();
         jtComplemento = new javax.swing.JTextField();
         jtBairro = new javax.swing.JTextField();
-        jcbCondutor = new javax.swing.JComboBox<String>();
+        jcbCondutor = new javax.swing.JComboBox<PerCondutor>();
         jlBairro = new javax.swing.JLabel();
         jlComplemento = new javax.swing.JLabel();
         jbCadastrar = new javax.swing.JButton();
@@ -269,29 +268,28 @@ public class VisEndereco extends javax.swing.JInternalFrame
     {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jTableEndereco.getModel();
-            String[] linha = new String[10];
+            String[] linha            = new String[10];
 
-            NegEndereco tc = new NegEndereco();
-            ArrayList<PerEndereco> tb = new ArrayList<PerEndereco>();
-            tb = tc.buscarTodosEnderecos();
+            NegEndereco ne            = new NegEndereco();
+            ArrayList<PerEndereco> pe = new ArrayList<>(ne.buscarTodosEnderecos());
 
             //Zerar número de linhas da tabela
             dtm.setNumRows(0);
 
             //Preenchimento da JTable
-            for (int i=0; i<tb.size(); i++) {
-                linha[0] = Integer.toString(tb.get(i).getIdendereco());
-                linha[1] = tb.get(i).getEndereco();
-                linha[2] = tb.get(i).getLogradouro();
-                linha[3] = Integer.toString(tb.get(i).getNumero());
-                linha[4] = tb.get(i).getComplemento();
-                linha[5] = tb.get(i).getBairro();
-                linha[6] = tb.get(i).getEstado();
-                linha[7] = tb.get(i).getCidade();
-                linha[8] = Integer.toString(tb.get(i).getCep());
-                linha[9] = tb.get(i).getCondutor().getNome();
+            for (PerEndereco peValor : pe) {
+                linha[0] = Integer.toString(peValor.getIdendereco());
+                linha[1] = peValor.getEndereco();
+                linha[2] = peValor.getLogradouro();
+                linha[3] = Integer.toString(peValor.getNumero());
+                linha[4] = peValor.getComplemento();
+                linha[5] = peValor.getBairro();
+                linha[6] = peValor.getEstado();
+                linha[7] = peValor.getCidade();
+                linha[8] = Integer.toString(peValor.getCep());
+                linha[9] = peValor.getCondutor().getNome();
                 dtm.addRow(linha);
-            }//for (int i=0; i<tb.size(); i++) {
+            } //for (int i=0; i<tb.size(); i++) {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro! "+e.getMessage());
@@ -328,11 +326,11 @@ public class VisEndereco extends javax.swing.JInternalFrame
     {
         try 
         {
-            NegCondutor cc = new NegCondutor();
-            ArrayList<PerCondutor> cAux = new ArrayList<>(cc.buscarTodosCondutores());
+            NegCondutor nc            = new NegCondutor();
+            ArrayList<PerCondutor> pc = new ArrayList<>(nc.buscarTodosCondutores());
             
-            for (PerCondutor cAux1 : cAux) {
-                jcbCondutor.addItem(cAux1.toString());
+            for (PerCondutor pcValor : pc) {
+                jcbCondutor.addItem(pcValor);
             } //for (int i=0; i<aAux.size(); i++) {
             
         } catch (Exception e) {
@@ -354,25 +352,25 @@ public class VisEndereco extends javax.swing.JInternalFrame
         try 
         { 
             //se qualquer um dos campos  não estiver vazio ele executa isto
-            if (!jtEndereco.getText().isEmpty() && !jtLogradouro.getText().isEmpty() 
-            && !jtNumero.getText().isEmpty() && !jtComplemento.getText().isEmpty()
+            if (!jtEndereco.getText().isEmpty() 
+            && !jtLogradouro.getText().isEmpty() 
+            && !jtNumero.getText().isEmpty() 
+            && !jtComplemento.getText().isEmpty()
             && !jtBairro.getText().isEmpty()) {
-                PerEndereco e = new PerEndereco();
-                e.setEndereco(jtEndereco.getText());
-                e.setLogradouro(jtLogradouro.getText());
-                e.setNumero(Integer.parseInt(jtNumero.getText()));
-                e.setComplemento(jtComplemento.getText());
-                e.setBairro(jtBairro.getText());
-                e.setEstado(jcbEstado.getSelectedItem().toString());
-                e.setCidade(jcbCidade.getSelectedItem().toString());
-                e.setCep(Integer.parseInt(jtCep.getText()));
-            
-                //COERÇÃO!
-                //CAST - Troca de tipo de dados forçada !!
-            
-                e.setCondutor((PerCondutor) jcbCondutor.getSelectedItem());
-                NegEndereco ec = new NegEndereco();
-                ec.cadastrarEndereco(e);
+                PerEndereco pe = new PerEndereco();
+                
+                pe.setEndereco(jtEndereco.getText());
+                pe.setLogradouro(jtLogradouro.getText());
+                pe.setNumero(Integer.parseInt(jtNumero.getText()));
+                pe.setComplemento(jtComplemento.getText());
+                pe.setBairro(jtBairro.getText());
+                pe.setEstado(jcbEstado.getSelectedItem().toString());
+                pe.setCidade(jcbCidade.getSelectedItem().toString());
+                pe.setCep(Integer.parseInt(jtCep.getText()));  
+                pe.setCondutor((PerCondutor) jcbCondutor.getSelectedItem());//CAST
+                
+                NegEndereco ne = new NegEndereco();
+                ne.cadastrarEndereco(pe);
 
                 JOptionPane.showMessageDialog(null, "Endereço Cadastrado com Sucesso!");
                 Limpar();
@@ -425,32 +423,28 @@ public class VisEndereco extends javax.swing.JInternalFrame
     private void jbVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVisualizarActionPerformed
         try 
         {
-            NegEndereco mc = new NegEndereco();
-            PerCondutor c = new PerCondutor();
-            ArrayList<PerEndereco> eAux = new ArrayList<PerEndereco>();
-            eAux = mc.buscarTodosEnderecos();
-
-            DefaultTableModel dtm=(DefaultTableModel)jTableEndereco.getModel();
+            NegEndereco mc            = new NegEndereco();
+            ArrayList<PerEndereco> pe = new ArrayList<>(mc.buscarTodosEnderecos());
+            DefaultTableModel dtm     =(DefaultTableModel)jTableEndereco.getModel();
 
             // Código para zerar o número de linhas da Tabela.
             dtm.setNumRows(0);
 
             String[] linha = new String[10];
 
-            for (int i=0 ; i<eAux.size() ; i++) {
-                linha[0] = Integer.toString(eAux.get(i).getIdendereco());
-                linha[1] = eAux.get(i).getEndereco();
-                linha[2] = eAux.get(i).getLogradouro();
-                linha[3] = Integer.toString(eAux.get(i).getNumero());
-                linha[4] = eAux.get(i).getComplemento();
-                linha[5] = eAux.get(i).getBairro();
-                linha[6] = eAux.get(i).getEstado();
-                linha[7] = eAux.get(i).getCidade();
-                linha[8] = Integer.toString(eAux.get(i).getCep());
-                linha[9] = eAux.get(i).getCondutor().getNome();
-
+            for (PerEndereco peValor : pe) {
+                linha[0] = Integer.toString(peValor.getIdendereco());
+                linha[1] = peValor.getEndereco();
+                linha[2] = peValor.getLogradouro();
+                linha[3] = Integer.toString(peValor.getNumero());
+                linha[4] = peValor.getComplemento();
+                linha[5] = peValor.getBairro();
+                linha[6] = peValor.getEstado();
+                linha[7] = peValor.getCidade();
+                linha[8] = Integer.toString(peValor.getCep());
+                linha[9] = peValor.getCondutor().getNome();
                 dtm.addRow(linha);
-            }//for (int i=0 ; i<eAux.size() ; i++) {
+            } //for (int i=0 ; i<eAux.size() ; i++) {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro! "+e.getMessage());
         }//try
@@ -467,7 +461,7 @@ public class VisEndereco extends javax.swing.JInternalFrame
     private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbVisualizar;
     private javax.swing.JComboBox jcbCidade;
-    private javax.swing.JComboBox<String> jcbCondutor;
+    private javax.swing.JComboBox<PerCondutor> jcbCondutor;
     private javax.swing.JComboBox jcbEstado;
     private javax.swing.JLabel jlBairro;
     private javax.swing.JLabel jlCep;
