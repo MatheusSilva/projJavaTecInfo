@@ -4,4 +4,6 @@ As alterações que eu fiz em relação ao projeto original foi. Utilizar prepar
 
 Eu portei o modulo de multas que eu havia feito neste projeto para C# com sqlite(https://github.com/MatheusSilva/detran)
 
+Eu portei o modulo de multas que eu havia feito neste projeto para php com laravel 4.2 (https://github.com/MatheusSilva/detranphp)
+
 Recentemente eu postei um tutorial que eu fiz mostrando um pouco do jenkins ci(servidor de continuação integrada) (https://github.com/MatheusSilva/confjenkins)
