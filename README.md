@@ -2,6 +2,8 @@ Meu projeto final de java do curso técnico em informática Este projeto é de 2
 
 As alterações que eu fiz em relação ao projeto original foi. Utilizar prepareStatements. Criar o pacote util que contém classes para se utilizar no projeto. Mudar um pouco a estrutura do MVC DAO.
 
+Este é o meu projeto final de php do curso técnico em informática (https://github.com/MatheusSilva/prophptecinfo)
+
 Eu portei o modulo de multas que eu havia feito neste projeto para C# com sqlite(https://github.com/MatheusSilva/detran)
 
 Eu portei o modulo de multas que eu havia feito neste projeto para php com laravel 4.2 (https://github.com/MatheusSilva/detranphp)
